@@ -3,11 +3,13 @@ queue()
     .defer(d3.json, "static/geojson/us-states.json")
     .await(makeGraphs);
 
+
 function makeGraphs(error, projectsJson, statesJson) {
-	
+	console.log("fetching data from the db");
 	//Clean projectsJson data
 	var donorschooseProjects = projectsJson;
 	var dateFormat = d3.time.format("%Y-%m-%d %H:%M:%S");
+
 	donorschooseProjects.forEach(function(d) {
 		d["date_posted"] = dateFormat.parse(d["date_posted"]);
 		d["date_posted"].setDate(1);

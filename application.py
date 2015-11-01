@@ -29,7 +29,7 @@ def index():
 def viewdbfile():
     connection = pymongo.MongoClient(MONGODB_URI)
     db = connection[DBS_NAME][COLLECTION_NAME] #which database and which collection to use goes here
-    results = db.find(limit=10000)
+    results = db.find(limit=50000)
     json_projects = []
     if results:
         for result in results:
