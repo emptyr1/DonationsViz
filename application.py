@@ -7,6 +7,7 @@ from bson.json_util import dumps
 from credens import *
 
 
+MAX_LIMIT = 80000
 # print a nice greeting.
 def say_hello(username = "World"):
     return '<p>Hello %s!</p>\n' % username
@@ -16,7 +17,6 @@ FIELDS = {'school_state': True, 'resource_type': True, 'poverty_level': True, 'd
 
 # EB looks for an 'application' callable by default.
 application = Flask(__name__)
-#application = app;
 #connect to mongolab -- all database credentials in a 'credens' file
 
 
@@ -29,7 +29,7 @@ def index():
 def viewdbfile():
     connection = pymongo.MongoClient(MONGODB_URI)
     db = connection[DBS_NAME][COLLECTION_NAME] #which database and which collection to use goes here
-    results = db.find(limit=50000)
+    results = db.find(limit=MAX_LIMIT)
     json_projects = []
     if results:
         for result in results:
@@ -38,7 +38,7 @@ def viewdbfile():
         connection.close()
         return json_projects
     else:
-        return 'file too big'
+        return 'error reading file..'
     
 
 
